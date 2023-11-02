@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Management</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/style.css}" />
+</head>
+<body>
+<button onclick="goBack()">Вернуться на главную</button>
+<script>
+    function goBack() {
+        window.location.href = "http://localhost:8080/";
+    }
+</script>
+<h2>Menus</h2>
+<form th:action="@{/Menus}" method="get">
+    <h3><label for="search">Поиск по блюду:</label></h3>
+    <input type="text" id="search" name="search" />
+    <br>
+    <button type="submit" >Search</button>
+</form>
+<table class="table table-hover">
+    <thead>
+    <tr class="table-secondary">
+        <th class="table-secondary">ID</th>
+        <th class="table-secondary">Restaurant</th>
+        <th class="table-secondary">Dish Name</th>
+        <th class="table-secondary">Price</th>
+        <th class="table-secondary">Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="menu : ${menus}">
+        <td th:text="${menu.menuId}"></td>
+        <td th:text="${menu.restaurant.name}"></td>
+        <td th:text="${menu.dishName}"></td>
+        <td th:text="${menu.price}"></td>
+        <td>
+            <a th:href="@{/editMenu/{id}(id=${menu.menuId})}">Edit</a> |
+            <a th:href="@{/deleteMenu/{id}(id=${menu.menuId})}">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<h3>Add Menu</h3>
+<form th:action="@{/addMenu}" method="post">
+    <label>Restaurant:
+        <select class="form-control" name="restaurantId">
+            <option th:each="restaurant : ${restaurants}" th:value="${restaurant.id}" th:text="${restaurant.name}"></option>
+        </select>
+    </label>
+    <label>Dish Name: <input class="form-control" type="text" name="dishName" required minlength="2" maxlength="255"></label>
+    <label>Price: <input class="form-control" type="number" name="price" required min="0.01" step="0.01" max="9999.99"></label>
+    <span th:if="${param.error}" class="error">Dish Name must be between 2 and 255 characters, Price must be between 0.01 and 9999.99</span>
+    <button type="submit" class="operator btn btn-info">Add</button>
+</form>
+
+
+
+</body>
+</html>

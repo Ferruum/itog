@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Menu</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/style.css}"/>
+</head>
+<body>
+<h2>Edit Menu</h2>
+
+<form th:action="@{/editMenu/{id}(id=${menu.menuId})}" method="post">
+    <input type="hidden" name="id" th:value="${menu.menuId}">
+    <label>Restaurant:
+        <select class="form-control" name="restaurantId">
+            <option th:each="restaurant : ${restaurants}" th:value="${restaurant.id}" th:text="${restaurant.name}"></option>
+        </select>
+    </label>
+    <label>Dish Name: <input class="form-control" type="text" name="dishName" th:value="${menu.dishName}" required minlength="2" maxlength="255"></label>
+    <label>Price: <input class="form-control" type="number" name="price" th:value="${menu.price}" required min="0.01" step="0.01" max="9999.99"></label>
+    <span th:if="${param.error}" class="error">Dish Name must be between 2 and 255 characters, Price must be between 0.01 and 9999.99</span>
+    <button type="submit" class="operator btn btn-info">Save</button>
+</form>
+
+
+</body>
+</html>

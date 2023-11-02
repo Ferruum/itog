@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Restaurant Cuisine</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/style.css}" />
+</head>
+<body>
+<h2>Edit Restaurant Cuisine</h2>
+
+<form th:action="@{/editRestaurantCuisine/{id}(id=${restaurantCuisine.id})}" method="post">
+    <input type="hidden" name="id" th:value="${restaurantCuisine.id}">
+    <label>Restaurant:
+        <select class="form-control" name="restaurantId" th:value="${restaurantCuisine.restaurant.id}">
+            <option th:each="restaurant : ${restaurants}" th:value="${restaurant.id}" th:text="${restaurant.name}"></option>
+        </select>
+    </label>
+    <label>Cuisine:
+        <select class="form-control" name="cuisineId" th:value="${restaurantCuisine.cuisine.cuisineId}">
+            <option th:each="cuisine : ${cuisines}" th:value="${cuisine.cuisineId}" th:text="${cuisine.cuisineType}"></option>
+        </select>
+    </label>
+    <button type="submit" class="operator btn btn-info">Save</button>
+</form>
+</body>
+</html>

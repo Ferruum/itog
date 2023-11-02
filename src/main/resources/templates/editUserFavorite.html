@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit User Favorite</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/style.css}" />
+</head>
+<body>
+<h2>Edit User Favorite</h2>
+
+<form th:action="@{/editUserFavorite/{id}(id=${userFavorite.id})}" method="post">
+    <input type="hidden" name="id" th:value="${userFavorite.id}">
+    <label>User:
+        <select class="form-control" name="userId" th:value="${userFavorite.user.userId}">
+            <option th:each="user : ${users}" th:value="${user.userId}" th:text="${user.firstName + ' ' + user.lastName}"></option>
+        </select>
+    </label>
+    <label>Restaurant:
+        <select class="form-control" name="restaurantId" th:value="${userFavorite.restaurant.id}">
+            <option th:each="restaurant : ${restaurants}" th:value="${restaurant.id}" th:text="${restaurant.name}"></option>
+        </select>
+    </label>
+    <button type="submit" class="operator btn btn-info">Save</button>
+</form>
+</body>
+</html>

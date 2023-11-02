@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Restaurant Cuisines Management</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/style.css}" />
+</head>
+<body>
+<button onclick="goBack()">Вернуться на главную</button>
+<script>
+  function goBack() {
+    window.location.href = "http://localhost:8080/";
+  }
+</script>
+<h2>Связи Ресторанов и Кухонь</h2>
+<table class="table table-hover">
+  <thead>
+  <tr class="table-secondary">
+    <th>ID</th>
+    <th>Restaurant</th>
+    <th>Cuisine</th>
+    <th>Action</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="restaurantCuisine : ${restaurantCuisines}">
+    <td th:text="${restaurantCuisine.id}"></td>
+    <td th:text="${restaurantCuisine.restaurant.name}"></td>
+    <td th:text="${restaurantCuisine.cuisine.cuisineType}"></td>
+    <td>
+      <a th:href="@{/editRestaurantCuisine/{id}(id=${restaurantCuisine.id})}">Редактировать</a> |
+      <a th:href="@{/deleteRestaurantCuisine/{id}(id=${restaurantCuisine.id})}">Удалить</a>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<h3>Добавить связь Ресторана и Кухни</h3>
+<form th:action="@{/addRestaurantCuisine}" method="post">
+  <label>Restaurant:
+    <select class="form-control" name="restaurantId">
+      <option th:each="restaurant : ${restaurants}" th:value="${restaurant.id}" th:text="${restaurant.name}"></option>
+    </select>
+  </label>
+  <label>Cuisine:
+    <select class="form-control" name="cuisineId">
+      <option th:each="cuisine : ${cuisines}" th:value="${cuisine.cuisineId}" th:text="${cuisine.cuisineType}"></option>
+    </select>
+  </label>
+  <button type="submit" class="operator btn btn-info">Добавить</button>
+</form>
+</body>
+</html>

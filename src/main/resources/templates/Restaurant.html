@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Restaurant Management</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/style.css}" />
+</head>
+<body>
+<button onclick="goBack()">Вернуться на главную</button>
+<script>
+  function goBack() {
+    window.location.href = "http://localhost:8080/";
+  }
+</script>
+<h2>Restaurants</h2>
+<form th:action="@{/Restaurants}" method="get">
+  <h3><label for="search">Поиск по названиею ресторана:</label></h3>
+  <input type="text" id="search" name="search" />
+  <br>
+  <button type="submit" >Search</button>
+</form>
+<table class="table table-hover">
+  <thead>
+  <tr class="table-secondary">
+    <th class="table-secondary">ID</th>
+    <th class="table-secondary">Name</th>
+    <th class="table-secondary">Address</th>
+    <th class="table-secondary">Phone Number</th>
+    <th class="table-secondary">Capacity</th>
+    <th class="table-secondary">Action</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="restaurant : ${restaurants}">
+    <td th:text="${restaurant.restaurantId}"></td>
+    <td th:text="${restaurant.name}"></td>
+    <td th:text="${restaurant.address}"></td>
+    <td th:text="${restaurant.phoneNumber}"></td>
+    <td th:text="${restaurant.capacity}"></td>
+    <td>
+      <a th:href="@{/editRestaurant/{id}(id=${restaurant.restaurantId})}">Edit</a> |
+      <a th:href="@{/deleteRestaurant/{id}(id=${restaurant.restaurantId})}">Delete</a>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<h3>Add Restaurant</h3>
+<form th:action="@{/addRestaurant}" method="post">
+  <label>Name:
+    <input class="form-control" type="text" name="name" required minlength="2" maxlength="255">
+  </label>
+  <label>Address:
+    <input class="form-control" type="text" name="address" required minlength="2" maxlength="255">
+  </label>
+  <label>Phone Number:
+    <input class="form-control" type="text" name="phoneNumber" required pattern="^\+7 \d{3} \d{3} \d{2} \d{2}$" title="+7 999 999 99 99">
+  </label>
+  <label>Capacity:
+    <input class="form-control" type="number" name="capacity" required min="1">
+  </label>
+  <span th:if="${param.error}" class="error">Name и Address должны быть от 2 до 255 символов, Capacity должен быть не менее 1</span>
+  <button type="submit" class="operator btn btn-info">Add</button>
+</form>
+
+
+
+
+
+</body>
+</html>

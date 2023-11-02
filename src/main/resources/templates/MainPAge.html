@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel="stylesheet" type="text/css" th:href="@{/style.css}" />
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Бронирование ресторанов</h1>
+<button id="editCuisineBtn" style="border-radius: 10px">Кухни</button>
+<script th:inline="javascript">
+    var contextPath = /*[[@{/}]]*/ '';
+    document.getElementById('editCuisineBtn').addEventListener('click', function() {
+        window.location.href = contextPath + 'Cuisines';
+    });
+</script>
+<br>
+<br>
+<button id="MenusBtn" style="border-radius: 10px">Меню</button>
+<script th:inline="javascript">
+    var contextPath = /*[[@{/}]]*/ '';
+    document.getElementById('MenusBtn').addEventListener('click', function() {
+        window.location.href = contextPath + 'Menus';
+    });
+</script>
+<br>
+<br>
+<button id="RestaurantsBtn" style="border-radius: 10px">Рестораны</button>
+<script th:inline="javascript">
+    var contextPath = /*[[@{/}]]*/ '';
+    document.getElementById('RestaurantsBtn').addEventListener('click', function() {
+        window.location.href = contextPath + 'Restaurants';
+    });
+</script>
+<br>
+<br>
+<button id="UsersBtn" style="border-radius: 10px">Пользователи</button>
+<script th:inline="javascript">
+    var contextPath = /*[[@{/}]]*/ '';
+    document.getElementById('UsersBtn').addEventListener('click', function() {
+        window.location.href = contextPath + 'Users';
+    });
+</script>
+<br>
+<br>
+<button id="OrdersBtn" style="border-radius: 10px">Заказ</button>
+<script th:inline="javascript">
+    var contextPath = /*[[@{/}]]*/ '';
+    document.getElementById('OrdersBtn').addEventListener('click', function() {
+        window.location.href = contextPath + 'Orders';
+    });
+</script>
+<br>
+<br>
+<button id="ReservationsBtn" style="border-radius: 10px">Резервация</button>
+<script th:inline="javascript">
+    var contextPath = /*[[@{/}]]*/ '';
+    document.getElementById('ReservationsBtn').addEventListener('click', function() {
+        window.location.href = contextPath + 'Reservations';
+    });
+</script>
+<br>
+<br>
+<button id="restaurantCuisinesBtn" style="border-radius: 10px">Кухни ресторанов</button>
+<script th:inline="javascript">
+    var contextPath = /*[[@{/}]]*/ '';
+    document.getElementById('restaurantCuisinesBtn').addEventListener('click', function() {
+        window.location.href = contextPath + 'restaurantCuisines';
+    });
+</script>
+<br>
+<br>
+<button id="userFavoritesBtn" style="border-radius: 10px">Избранное пользователя</button>
+<script th:inline="javascript">
+    var contextPath = /*[[@{/}]]*/ '';
+    document.getElementById('userFavoritesBtn').addEventListener('click', function() {
+        window.location.href = contextPath + 'userFavorites';
+    });
+</script>
+</body>
+</html>

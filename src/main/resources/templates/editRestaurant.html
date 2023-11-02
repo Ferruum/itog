@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Restaurant</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/style.css}"/>
+</head>
+<body>
+<h2>Edit Restaurant</h2>
+
+<form th:action="@{/editRestaurant/{id}(id=${restaurant.restaurantId})}" method="post">
+    <input type="hidden" name="id" th:value="${restaurant.restaurantId}">
+    <label>Name:
+        <input type="text" name="name" th:value="${restaurant.name}" required minlength="2" maxlength="255">
+    </label>
+    <label>Address:
+        <input type="text" name="address" th:value="${restaurant.address}" required minlength="2" maxlength="255">
+    </label>
+    <label>Phone Number:
+        <input type="text" name="phoneNumber" th:value="${restaurant.phoneNumber}" required pattern="^\+7 \d{3} \d{3} \d{2} \d{2}$" title="+7 999 999 99 99">
+    </label>
+    <label>Capacity:
+        <input type="number" name="capacity" th:value="${restaurant.capacity}" required min="1">
+    </label>
+    <span th:if="${param.error}" class="error">Name и Address должны быть от 2 до 255 символов, Capacity должен быть не менее 1</span>
+    <button type="submit">Save</button>
+</form>
+
+</body>
+</html>

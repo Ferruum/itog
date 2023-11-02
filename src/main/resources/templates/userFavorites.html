@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Favorites Management</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/style.css}" />
+</head>
+<body>
+<button onclick="goBack()">Вернуться на главную</button>
+<script>
+    function goBack() {
+        window.location.href = "http://localhost:8080/";
+    }
+</script>
+<h2>Избранное пользователей</h2>
+<table class="table table-hover">
+    <thead>
+    <tr class="table-secondary">
+        <th>ID</th>
+        <th>User</th>
+        <th>Restaurant</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="userFavorite : ${userFavorites}">
+        <td th:text="${userFavorite.id}"></td>
+        <td th:text="${userFavorite.user.firstName + ' ' + userFavorite.user.lastName}"></td>
+        <td th:text="${userFavorite.restaurant.name}"></td>
+        <td>
+            <a th:href="@{/editUserFavorite/{id}(id=${userFavorite.id})}">Редактировать</a> |
+            <a th:href="@{/deleteUserFavorite/{id}(id=${userFavorite.id})}">Удалить</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<h3>Добавить в избранное</h3>
+<form th:action="@{/addUserFavorite}" method="post">
+    <label>User:
+        <select class="form-control" name="userId">
+            <option th:each="user : ${users}" th:value="${user.userId}" th:text="${user.firstName + ' ' + user.lastName}"></option>
+        </select>
+    </label>
+    <label>Restaurant:
+        <select class="form-control" name="restaurantId">
+            <option th:each="restaurant : ${restaurants}" th:value="${restaurant.id}" th:text="${restaurant.name}"></option>
+        </select>
+    </label>
+    <button type="submit" class="operator btn btn-info">Добавить</button>
+</form>
+</body>
+</html>

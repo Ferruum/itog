@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reservation Management</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/style.css}" />
+</head>
+<body>
+<button onclick="goBack()">Вернуться на главную</button>
+<script>
+  function goBack() {
+    window.location.href = "http://localhost:8080/";
+  }
+</script>
+<h2>Бронирования</h2>
+<table class="table table-hover">
+  <thead>
+  <tr class="table-secondary">
+    <th>ID</th>
+    <th>User</th>
+    <th>Restaurant</th>
+    <th>Date</th>
+    <th>Time</th>
+    <th>Party Size</th>
+    <th>Action</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="reservation : ${reservations}">
+    <td th:text="${reservation.reservationId}"></td>
+    <td th:text="${reservation.user.firstName}"></td>
+    <td th:text="${reservation.restaurant.name}"></td>
+    <td th:text="${reservation.date}"></td>
+    <td th:text="${reservation.time}"></td>
+    <td th:text="${reservation.partySize}"></td>
+    <td>
+      <a th:href="@{/editReservation/{id}(id=${reservation.reservationId})}">Редактировать</a> |
+      <a th:href="@{/deleteReservation/{id}(id=${reservation.reservationId})}">Удалить</a>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<h3>Добавить бронирование</h3>
+<form th:action="@{/addReservation}" method="post">
+  <label>User:
+    <select class="form-control" name="userId" required>
+      <option th:each="user : ${users}" th:value="${user.userId}" th:text="${user.firstName}"></option>
+    </select>
+  </label>
+  <label>Restaurant:
+    <select class="form-control" name="restaurantId" required>
+      <option th:each="restaurant : ${restaurants}" th:value="${restaurant.restaurantId}" th:text="${restaurant.name}"></option>
+    </select>
+  </label>
+  <label>Date: <input class="form-control" type="date" name="date" required></label>
+  <label>Time: <input class="form-control" type="time" name="time" required></label>
+  <label>Party Size: <input class="form-control" type="number" name="partySize" required min="1"></label>
+  <span th:if="${param.error}" class="error">User, Restaurant, Date, Time, and Party Size are required. Party Size must be at least 1.</span>
+  <button type="submit" class="operator btn btn-info">Add</button>
+</form>
+
+</body>
+</html>

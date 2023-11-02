@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Cuisine</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/style.css}" />
+<body>
+<button onclick="goBack()">Назад</button>
+<script>
+    function goBack() {
+        window.location.href = "http://localhost:8080/Cuisines";
+    }
+</script>
+
+<h2>Редактирование кухни</h2>
+
+<!-- Edit Cuisine Form -->
+<form th:action="@{/editCuisine/{id}(id=${cuisine.cuisineId})}" method="post">
+    <input type="hidden" name="id" th:value="${cuisine.cuisineId}">
+    <label>Тип кухни: <input class="form-control" type="text" name="cuisineType" th:value="${cuisine.cuisineType}" required minlength="2" maxlength="255"></label>
+    <span th:if="${param.error}" class="error">Cuisine type is required</span>
+    <button type="submit" class="operator btn btn-info">Сохранить</button>
+</form>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Management</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/style.css}" />
+</head>
+<body>
+<button onclick="goBack()">Вернуться на главную</button>
+<script>
+  function goBack() {
+    window.location.href = "http://localhost:8080/";
+  }
+</script>
+<h2>Orders</h2>
+<!--<form th:action="@{/Orders}" method="get">-->
+<!--  <h3><label for="search">Поиск по количеству человек:</label></h3>-->
+<!--  <input type="text" id="search" name="search" />-->
+<!--  <br>-->
+<!--  <button type="submit" >Search</button>-->
+<!--</form>-->
+<table class="table table-hover">
+  <thead>
+  <tr class="table-secondary">
+    <th>ID</th>
+    <th>Reservation</th>
+    <th>Menu</th>
+    <th>Quantity</th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="order : ${orders}">
+    <td th:text="${order.orderId}"></td>
+    <td th:text="${order.reservation.restaurant.name}"></td>
+    <td th:text="${order.menu.dishName}"></td>
+    <td th:text="${order.quantity}"></td>
+    <td>
+      <a th:href="@{/editOrder/{id}(id=${order.orderId})}">Редактировать</a> |
+      <a th:href="@{/deleteOrder/{id}(id=${order.orderId})}">Удалить</a>
+    </td>
+  </tr>
+  </tbody>
+</table>
+<h3>Добавить заказ</h3>
+<form th:action="@{/addOrder}" method="post">
+  <label>Reservation:
+    <select class="form-control" name="reservationId" required>
+      <option th:each="reservation : ${reservations}" th:value="${reservation.reservationId}" th:text="${reservation.restaurant.name}"></option>
+    </select>
+  </label>
+  <label>Menu:
+    <select class="form-control" name="menuId" required>
+      <option th:each="menu : ${menus}" th:value="${menu.menuId}" th:text="${menu.dishName}"></option>
+    </select>
+  </label>
+  <label>Quantity: <input class="form-control" type="number" name="quantity" required min="1"></label>
+  <span th:if="${param.error}" class="error">Reservation, Menu, and Quantity are required. Quantity must be at least 1.</span>
+  <button type="submit" class="operator btn btn-info">Add</button>
+</form>
+
+</body>
+</html>

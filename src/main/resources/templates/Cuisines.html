@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Management</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/style.css}" />
+</head>
+<body>
+<button onclick="goBack()">Вернуться на главную</button>
+<script>
+    function goBack() {
+        window.location.href = "http://localhost:8080/";
+    }
+</script>
+<h2>Кухни</h2>
+<form th:action="@{/Cuisines}" method="get">
+    <h3><label for="search">Search by type:</label></h3>
+    <input type="text" id="search" name="search" />
+    <br>
+    <button type="submit" >Search</button>
+</form>
+<table class="table table-hover">
+    <thead>
+    <tr class="table-secondary">
+        <th>ID</th>
+        <th>Тип кухни</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="cuisine : ${cuisines}">
+        <td th:text="${cuisine.cuisineId}"></td>
+        <td th:text="${cuisine.cuisineType}"></td>
+        <td>
+            <a th:href="@{/editCuisine/{id}(id=${cuisine.cuisineId})}">Редактировать</a> |
+            <a th:href="@{/deleteCuisine/{id}(id=${cuisine.cuisineId})}">Удалить</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<h3>Добавить кухню</h3>
+<form th:action="@{/addCuisine}" method="post">
+    <label>Тип кухни: <input class="form-control" type="text" name="cuisineType" required minlength="2" maxlength="255"></label>
+    <span th:if="${param.error}" class="error">Cuisine type is required</span>
+    <button type="submit" class="operator btn btn-info">Добавить</button>
+</form>
+
+</body>
+</html>

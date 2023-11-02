@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Order</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/style.css}"/>
+</head>
+<body>
+<h2>Edit Order</h2>
+
+<form th:action="@{/editOrder/{id}(id=${order.orderId})}" method="post">
+    <input type="hidden" name="id" th:value="${order.orderId}">
+    <label>Reservation:
+        <select name="reservationId" th:value="${order.reservation.reservationId}" required>
+            <option th:each="reservation : ${reservations}" th:value="${reservation.reservationId}" th:text="${reservation.restaurant.name}"></option>
+        </select>
+    </label>
+    <label>Menu:
+        <select name="menuId" th:value="${order.menu.menuId}" required>
+            <option th:each="menu : ${menus}" th:value="${menu.menuId}" th:text="${menu.dishName}"></option>
+        </select>
+    </label>
+    <label>Quantity: <input type="number" name="quantity" th:value="${order.quantity}" required min="1"></label>
+    <span th:if="${param.error}" class="error">Reservation, Menu, and Quantity are required. Quantity must be at least 1.</span>
+    <button type="submit">Save</button>
+</form>
+
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit User</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/style.css}"/>
+</head>
+<body>
+<h2>Edit User</h2>
+
+<form th:action="@{/editUser/{id}(id=${user.userId})}" method="post">
+    <input type="hidden" name="id" th:value="${user.userId}">
+    <label>First Name:
+        <input class="form-control" type="text" name="firstName" th:value="${user.firstName}" required minlength="2" maxlength="255">
+    </label>
+    <label>Last Name:
+        <input class="form-control" type="text" name="lastName" th:value="${user.lastName}" required minlength="2" maxlength="255">
+    </label>
+    <label>Email:
+        <input class="form-control" type="email" name="email" th:value="${user.email}" required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$">
+    </label>
+    <label>Password:
+        <input class="form-control" type="password" name="password" th:value="${user.password}" required pattern=".*[!@#$%^&*()_+={}\[\]:;<>,.?\\\/-].*" minlength="6">
+    </label>
+    <span th:if="${param.error}" class="error">First Name и Last Name должны быть от 2 до 255 символов, Email должен быть валидным, Пароль должен содержать хотя бы один специальный символ и быть не менее 6 символов</span>
+    <button type="submit" class="operator btn btn-info">Save</button>
+</form>
+
+</body>
+</html>
